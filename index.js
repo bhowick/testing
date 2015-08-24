@@ -4,6 +4,12 @@ var express = require('express'); //Gettin' express code. Express is for NodeJS.
 //ALSO IT'S A HAIKU
 var ejs = require('ejs'); //We're going to use the EJS view engine. Whatever that means! This is new to me.
 var bodyParser = require('body-parser');
+var sqlite3 = require('sqlite3')/*.verbose()*/; //Supposedly .verbose() makes it have more meaningful output to the console.
+var dbFile = './db/db.sqlite';
+var db = new sqlite3.Database(dbFile); //Initializes our database as a new object. :)
+
+//Below this are required modules that we're using, not for node/express. Library directory!
+var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
 
 //Express initialization complete as of the line below.
 var app = express();
@@ -15,16 +21,24 @@ app.use(bodyParser.urlencoded({ extended: false })); //This enables bodyParser. 
 
 //"it will make sense IN TIME" - Gamemaster
 //uh
-app.get('/', function(req,res) {
-	//res.send('Hello world!'); //This has become too easy for us now. We are advancing. LET THE RENDERING BEGIN!
-	res.render('pages/index', {username: null});
+app.get('/', indexHandler.GET);
+app.get('/viewAll', function(req,res) {
+	db.all("SELECT * FROM items", function (err,rows) {
+		//If the database messes up...
+		if(err) {
+			res.send('Database Error!');
+		}
+		else {
+			var items = rows;
+
+			res.render('pages/viewAll', {items:items}); //The lack of a "/" before "pages" is needed. Otherwise it errors!
+		}
+	});
+	
 });
 
 //This is used if the server receives a post request! 
-app.post('/', function (req,res) {
-	var name = req.body.name || null; //Requests the variable 'name' from the body. Thanks, BodyParser!
-	res.render('pages/index', {username: name});
-});
+app.post('/', indexHandler.POST);
 
 console.log('Listening on Port 3000.');
 app.listen(3000); //We are now going to listen on port 3000. Arbitration!

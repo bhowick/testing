@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Look at all of this data!</title>
+	</head>
+	<body>
+		<div>
+			<h1>Lost & Found</h1>
+		</div>
+		<table>
+			<thead>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+			</thead>
+			<tbody><!--Code is happening below this line to populate the table's contents! -->
+			<% items.forEach( function(item) { %>
+				<tr>
+					<td style="color:<%= item.color %>"><strong><%= item.name %></strong></td>
+					<td><em><%= item.desc %></em></td>
+					<td><%= item.price %></td>
+				</tr>
+
+			<% }) %> <!-- Code is done! -->
+			</tbody>
+		</table>
+	</body>
+</html>
