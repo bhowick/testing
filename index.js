@@ -36,9 +36,27 @@ app.get('/viewAll', function(req,res) {
 	});
 	
 });
+app.get('/addNewEntry', function(req,res) {
+	res.render('pages/addNewEntry');
+
+});
+
 
 //This is used if the server receives a post request! 
 app.post('/', indexHandler.POST);
+app.post('/addNewEntry', function(req,res) { //We're getting all of the entered data from the form here.
+	var name = req.body.name;
+	var desc = req.body.desc;
+	var price = req.body.price;
+	var color = req.body.color;
 
-console.log('Listening on Port 3000.');
+	var newItem = [name, desc, price, color]; //Turns all the variables into one array. Convenience!
+	db.run('INSERT INTO items (name,desc,price,color) VALUES(?,?,?,?)', newItem, function(err) {
+
+	});
+	res.render('pages/addNewEntry');
+
+});
+
+console.log('Listening on Port 3000.'); //To let us know in console when the server is working.
 app.listen(3000); //We are now going to listen on port 3000. Arbitration!
