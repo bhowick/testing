@@ -13,13 +13,18 @@
 				<th>Name</th>
 				<th>Description</th>
 				<th>Price</th>
+				<th>Edit</th>
+				<th style="color:darkred">Delete item?</th>
 			</thead>
 			<tbody><!--Code is happening below this line to populate the table's contents! -->
 			<% items.forEach( function(item) { %>
 				<tr>
-					<td style="color:<%= item.color %>"><strong><%= item.name %></strong></td>
+					<td style='color:<%= item.color %>'><strong><%= item.name %></strong></td>
 					<td><em><%= item.desc %></em></td>
 					<td><%= item.price %></td>
+					<td><a href='/editEntry?id=<%= item.id %>' style='text-decoration:none; color:darkgreen'>Edit</a></td>
+					<td><a href='/deleteEntry?id=<%= item.id %>' style='text-decoration:none; color:darkorange'>Delete</a></td>
+					
 				</tr>
 
 			<% }) %> <!-- Code is done! -->

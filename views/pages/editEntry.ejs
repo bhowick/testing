@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Changing something?</title>
+	</head>
+	<body>
+		<h3>Now Editing <span style='color:<%= item.color %>'><%= item.name %></span> (ID #<%= item.id %>)</h3>
+		<form action='/editEntry' METHOD='POST'>
+			<input type="hidden" name="id" value="<%= item.id %>" readonly>
+			<strong>New Name</strong>: 
+			<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" autofocus> <span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span>
+			<br>
+
+			<strong>New Description</strong>: 
+			<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>"> <span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span>
+			<br>
+
+			<strong>New Price</strong>: 
+			<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>"> <span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span>
+			<br>
+
+			<strong>New Color</strong>: 
+			<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray"> <span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span>
+			<br>
+
+			<input type="submit" value="Submit New Entry" style="border:2px solid black">
+		</form>
+	</body>
+</html>

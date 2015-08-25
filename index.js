@@ -21,9 +21,9 @@ app.use(bodyParser.urlencoded({ extended: false })); //This enables bodyParser. 
 
 //"it will make sense IN TIME" - Gamemaster
 //uh
-app.get('/', indexHandler.GET);
-app.get('/viewAll', function(req,res) {
-	db.all("SELECT * FROM items", function (err,rows) {
+app.get('/', indexHandler.GET); //Rendering the index page!
+app.get('/viewAll', function(req,res) { //Rendering the database onto a nice little output page!
+	db.all('SELECT * FROM items', function (err,rows) {
 		//If the database messes up...
 		if(err) {
 			res.send('Database Error!');
@@ -36,9 +36,26 @@ app.get('/viewAll', function(req,res) {
 	});
 	
 });
-app.get('/addNewEntry', function(req,res) {
+app.get('/addNewEntry', function(req,res) { //Adding a new entry to the database?
 	res.render('pages/addNewEntry');
 
+});
+app.get('/editEntry', function(req,res) {
+	var id = req.query.id || null;
+	if(id) {
+		db.run('SELECT * FROM items WHERE id = ?', id, function(err,row){
+			if(err){
+				res.send('Database Error!');
+			}
+			else {
+				var item = row;
+				res.render('pages/editEntry', {item:item});
+			}
+		});
+	}
+	else {
+		res.redirect('/viewAll');
+	}
 });
 
 
@@ -52,10 +69,39 @@ app.post('/addNewEntry', function(req,res) { //We're getting all of the entered 
 
 	var newItem = [name, desc, price, color]; //Turns all the variables into one array. Convenience!
 	db.run('INSERT INTO items (name,desc,price,color) VALUES(?,?,?,?)', newItem, function(err) {
-
+		//Error stuff normally goes here.
 	});
 	res.render('pages/addNewEntry');
 
+});
+app.post('/editEntry', function(req,res) {
+	var id = req.body.id || null;
+	var name = req.body.name || null;
+	var desc = req.body.desc || null;
+	var price = req.body.price || null;
+	var color = req.body.color || null;
+	var editedItem = [name, desc, price, color, id]; //The item data we're changing!
+
+	db.run('UPDATE items SET name=?, desc=?, price=?, color=? WHERE id=?', editedItem, function(err){
+		if(err){
+			res.send('Database error!');
+		}
+		else{
+			res.redirect('/editEntry'+'?id='+id);
+		}
+	});
+
+});
+
+//For handling pages that are only really loaded one way!
+app.all('/deleteEntry', function(req,res) {
+	var id = req.query.id || null;
+	if(id){
+		db.run('DELETE FROM items WHERE id = ?', id, function(err) {
+			//Error stuff normally goes here.
+		});
+	}
+	res.redirect('/viewAll');
 });
 
 console.log('Listening on Port 3000.'); //To let us know in console when the server is working.
