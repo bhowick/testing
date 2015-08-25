@@ -43,7 +43,7 @@ app.get('/addNewEntry', function(req,res) { //Adding a new entry to the database
 app.get('/editEntry', function(req,res) {
 	var id = req.query.id || null;
 	if(id) {
-		db.run('SELECT * FROM items WHERE id = ?', id, function(err,row){
+		db.get('SELECT * FROM items WHERE id = ?', id, function (err,row) {
 			if(err){
 				res.send('Database Error!');
 			}
