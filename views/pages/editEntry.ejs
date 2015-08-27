@@ -2,27 +2,34 @@
 <html>
 	<head>
 		<title>Changing something?</title>
+		<link rel="stylesheet" type="text/css" href="teststyle.css">
 	</head>
 	<body>
 		<h3>Now Editing <span style='color:<%= item.color %>'><%= item.name %></span> (ID #<%= item.id %>)</h3>
 		<form action='/editEntry' METHOD='POST'>
-			<input type="hidden" name="id" value="<%= item.id %>" readonly>
-			<strong>New Name</strong>: 
-			<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" autofocus> <span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span>
-			<br>
-
-			<strong>New Description</strong>: 
-			<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>"> <span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span>
-			<br>
-
-			<strong>New Price</strong>: 
-			<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>"> <span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span>
-			<br>
-
-			<strong>New Color</strong>: 
-			<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray"> <span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span>
-			<br>
-
+				<input type="hidden" name="id" value="<%= item.id %>" readonly>
+			<table>
+				<th colspan="2" style:"text-align:center"><strong>Enter Data Below!</strong></th>
+				<tr>
+					<td><strong>New Name</strong>: <br>
+					<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" autofocus></td>
+					<td><span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span></td>
+				</tr>
+				<tr>
+					<td><strong>New Description</strong>: <br>
+					<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
+				</tr>
+				<tr>
+					<td><strong>New Price</strong>: <br>
+					<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>"></td>
+					<td><span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span></td>
+				</tr>
+				<tr>
+					<td><strong>New Color</strong>: <br>
+					<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray"></td>
+					<td><span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
+				</tr>
+			</table>
 			<input type="submit" value="Submit New Entry" style="border:2px solid black">
 		</form>
 		<p>Click <a href='/viewAll' style='text-decoration:none; color:orange'>here</a> to go back to viewing all of the items!</p>

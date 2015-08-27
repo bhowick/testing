@@ -1,0 +1,37 @@
+td input {
+	background-color:gray;
+	height:auto;
+	
+}
+
+table {
+	padding:5px;
+	border:2px solid #88cccc;
+}
+
+th {
+	border-bottom:4px solid black;
+	border-right:1px solid black;
+	padding:5px 5px 10px 5px;
+}
+
+tr {
+	height:auto;
+	width:auto;
+}
+
+td {
+	border-right:1px solid black;
+	border-bottom:2px solid black;
+	width:auto;
+	border-bottom-right-radius:10px;
+	padding-right:5px;
+}
+
+td:first-child{
+	width:10%;
+}
+td:last-child{
+	width:10%;
+	text-align:center;
+}
