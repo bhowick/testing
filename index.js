@@ -11,15 +11,21 @@ var validator = require('validator'); //Helps us validate input! Useful for quer
 
 //Below this are required modules that we're using, not for node/express. Library directory!
 var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
+var addNewEntryHandler = require('./lib/addNewEntryHandler.js'); //Kind of a weird/long name, eh?
+var editEntryHandler = require('./lib/editEntryHandler.js'); //Is there something wrong with this?
 
 //Express initialization complete as of the line below.
 var app = express();
 //BELOW THIS LINE IS WHERE WE DECLARE MIDDLEWARE. It runs every single time before the page loads. 
 app.set('view engine', 'ejs'); //This is a view engine for Express. 
+
 app.use(express.static(__dirname + '/views/')); //This tells express to use the /views/ directory.
 app.use(bodyParser.urlencoded({ extended: false })); //This enables bodyParser. I am not totally sure at this time what it does.
-
-
+app.use(function (req,res,next) { //Enables us to make database calls and validate stuff from other pages.
+  req.db = db;
+  req.validator = validator;
+  next();
+});
 //"it will make sense IN TIME" - Gamemaster
 //uh
 app.get('/', indexHandler.GET); //Rendering the index page!
@@ -37,87 +43,21 @@ app.get('/viewAll', function(req,res) { //Rendering the database onto a nice lit
 	});
 	
 });
-app.get('/addNewEntry', function(req,res) { //Adding a new entry to the database?
-	res.render('pages/addNewEntry');
-
-});
-app.get('/editEntry', function(req,res) {
-	var id = req.query.id || null;
-	if(id) {
-		db.get('SELECT * FROM items WHERE id = ?', id, function (err,row) {
-			if(err){
-				res.send('Database Error!');
-			}
-			else {
-				var item = row;
-				res.render('pages/editEntry', {item:item});
-			}
-		});
-	}
-	else {
-		res.redirect('/viewAll');
-	}
-});
+app.get('/addNewEntry', addNewEntryHandler.GET);
+app.get('/editEntry', editEntryHandler.GET);
 
 
 //This is used if the server receives a post request! 
 app.post('/', indexHandler.POST);
-app.post('/addNewEntry', function(req,res) { //We're getting all of the entered data from the form here.
-	var name = req.body.name;
-	var desc = req.body.desc;
-	var price = req.body.price;
-	var color = req.body.color;
-
-	validator.escape(name); //These three lines make sure someone can't screw with page rendering by injecting HTML.
-	validator.escape(desc);
-	validator.escape(color);
-
-	var newItem = [name, desc, price, color]; //Turns all the variables into one array. Convenience!
-
-	
-	if(!validator.isNumeric(price)) { //Makes sure our Price is actually a number.
-		console.log('Not an integer.');
-		res.redirect('/addNewEntry');
-		return;
-	}
-	/*if(!validator.isHexColor(color)) { //Makes sure our Color is actually a hex color. Not strictly necessary!
-		console.log('That is not a color!');
-		res.redirect('/addNewEntry');
-		return;
-	}*/
-
-
-	db.run('INSERT INTO items (name,desc,price,color) VALUES(?,?,?,?)', newItem, function(err) {
-		//Error stuff normally goes here.
-	});
-	res.render('pages/addNewEntry');
-
-});
-app.post('/editEntry', function(req,res) {
-	var id = req.body.id || null;
-	var name = req.body.name || null;
-	var desc = req.body.desc || null;
-	var price = parseInt(req.body.price) || null;
-	var color = req.body.color || null;
-	var editedItem = [name, desc, price, color, id]; //The item data we're changing!
-
-	db.run('UPDATE items SET name=?, desc=?, price=?, color=? WHERE id=?', editedItem, function(err){
-		if(err){
-			res.send('Database error!');
-		}
-		else{
-			res.redirect('/editEntry'+'?id='+id);
-		}
-	});
-
-});
+app.post('/addNewEntry', addNewEntryHandler.POST);
+app.post('/editEntry', editEntryHandler.POST);
 
 //For handling pages that are only really loaded one way!
 app.all('/deleteEntry', function(req,res) {
 	var id = req.query.id || null;
 	if(id){
 		db.run('DELETE FROM items WHERE id = ?', id, function(err) {
-			//Error stuff normally goes here.
+		//Error stuff normally goes here.
 		});
 	}
 	res.redirect('/viewAll');
