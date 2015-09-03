@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Deleting <%= item.name %></title>
+		<link rel="stylesheet" type="text/css" href="teststyle.css">
+	</head>
+	<body>
+		<h3>Are you sure you want to delete this item?</h3>
+		<table>
+			<tr>
+				<th>ID#</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+			</tr>
+			<tr>
+				<td><span style='color:<%= item.color %>'><%= item.id %></span></td>
+				<td><%= item.name %></td>
+				<td><%= item.desc %></td>
+				<td><%= item.price %></td>
+			</tr>
+		</table>
+		<br>
+		<table>
+			<tr>
+				<td style='text-align:center'>
+					<form action='/deleteEntry' METHOD='POST'>
+						<input type='hidden' name='id' value='<%= item.id %>' readonly>
+						<input type='submit' value='Click Here to Confirm Deletion' style='border:2px solid black'>
+					</form>
+				</td>
+				<td>
+					<a href='/viewAll' style:'text-decoration:none'><button type='button' style='border:2px solid black'>Return to Lost & Found (Cancel)</button></a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -45,6 +45,23 @@ app.get('/viewAll', function(req,res) { //Rendering the database onto a nice lit
 });
 app.get('/addNewEntry', addNewEntryHandler.GET);
 app.get('/editEntry', editEntryHandler.GET);
+app.get('/confirmDelete', function(req,res) {
+	var id = req.query.id || null;
+	if(id) {
+		db.get('SELECT * FROM items WHERE id = ?', id, function(err,row){
+			if(err) {
+				res.send('Database Error!');
+			}
+			else {
+				var item = row;
+				res.render('pages/confirmDelete', {item:item});
+			}
+		});
+	}
+	else {
+		res.redirect('/viewAll');
+	}
+});
 
 
 //This is used if the server receives a post request! 
@@ -54,7 +71,7 @@ app.post('/editEntry', editEntryHandler.POST);
 
 //For handling pages that are only really loaded one way!
 app.all('/deleteEntry', function(req,res) {
-	var id = req.query.id || null;
+	var id = req.body.id || null;
 	if(id){
 		db.run('DELETE FROM items WHERE id = ?', id, function(err) {
 		//Error stuff normally goes here.
