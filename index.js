@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var sqlite3 = require('sqlite3')/*.verbose()*/; //Supposedly .verbose() makes it have more meaningful output to the console.
 var dbFile = './db/db.sqlite';
 var db = new sqlite3.Database(dbFile); //Initializes our database as a new object. :)
+var validator = require('validator'); //Helps us validate input! Useful for queries.
 
 //Below this are required modules that we're using, not for node/express. Library directory!
 var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
@@ -67,7 +68,25 @@ app.post('/addNewEntry', function(req,res) { //We're getting all of the entered 
 	var price = req.body.price;
 	var color = req.body.color;
 
+	validator.escape(name); //These three lines make sure someone can't screw with page rendering by injecting HTML.
+	validator.escape(desc);
+	validator.escape(color);
+
 	var newItem = [name, desc, price, color]; //Turns all the variables into one array. Convenience!
+
+	
+	if(!validator.isNumeric(price)) { //Makes sure our Price is actually a number.
+		console.log('Not an integer.');
+		res.redirect('/addNewEntry');
+		return;
+	}
+	/*if(!validator.isHexColor(color)) { //Makes sure our Color is actually a hex color. Not strictly necessary!
+		console.log('That is not a color!');
+		res.redirect('/addNewEntry');
+		return;
+	}*/
+
+
 	db.run('INSERT INTO items (name,desc,price,color) VALUES(?,?,?,?)', newItem, function(err) {
 		//Error stuff normally goes here.
 	});
@@ -78,7 +97,7 @@ app.post('/editEntry', function(req,res) {
 	var id = req.body.id || null;
 	var name = req.body.name || null;
 	var desc = req.body.desc || null;
-	var price = req.body.price || null;
+	var price = parseInt(req.body.price) || null;
 	var color = req.body.color || null;
 	var editedItem = [name, desc, price, color, id]; //The item data we're changing!
 
