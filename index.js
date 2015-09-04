@@ -18,6 +18,9 @@ EJS code alongside HTML
 
 =-=-=-=-=-=-=-=-=-=-=-=-=*/
 
+//THIS IS A COMMENT
+/*THIS IS ALSO, HOPEFULLY*/
+//NOW IT'S A HAIKU
 
 var express = require('express'); //Gettin' express code. Express is for NodeJS.
 var ejs = require('ejs'); //We're going to use the EJS view engine to render .ejs pages. Neat, <% %>-escaped stuff.

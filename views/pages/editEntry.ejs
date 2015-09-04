@@ -12,21 +12,21 @@
 				<th colspan="2" style:"text-align:center"><strong>Enter Data Below!</strong></th>
 				<tr>
 					<td><strong>New Name</strong>: <br>
-					<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" autofocus></td>
+					<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" placeholder="Enter new item name here" autofocus></td>
 					<td><span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Description</strong>: <br>
-					<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
+					<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>" placeholder="Enter new item description here"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Price</strong>: <br>
-					<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>"></td>
+					<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>" placeholder="Enter new item price here"></td>
 					<td><span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Color</strong>: <br>
-					<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray"></td>
+					<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray" placeholder="Enter new item color here"></td>
 					<td><span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
 				</tr>
 			</table>
