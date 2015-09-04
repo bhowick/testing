@@ -1,37 +1,29 @@
 <!DOCTYPE html>
-
+<!-- This is a comment. -->
 <html>
 	<head>
-		<title>This is a webpage!</title>
+		<title>Index Page Title! Enthusiasm!</title>
+		<!-- <link rel="stylesheet" type="text/css" href="teststyle.css"> -->
 	</head>
 	<body>
-		<h1>This is a header (1)!</h1>
-			<p>This is a paragraph.</p>
-		<h2>This is another header.</h2>
-			<ul>
-				<li>list.</li>
-				<li>an</li>
-				<li>This</li>
-				<li>unordered</li>
-				<li>is</li>
-			</ul>
-		<h3>This is yet another header.</h3>
-			<ol>
-				<li>This list is in order. Unfortunately, it is also short.</li>
-			</ol>
-		<h4>This is also a header. (4)</h4>
-			<form action="/" METHOD="POST">
-				<strong>Name:</strong>
-				<br>
-				<input type="text" name="name" style="border: 2px solid #88cccc">
-				
-				<input type="submit" value="Submit" style="border:2px solid black; transform: rotate(90deg)">
-			</form>
-		<h5>This is a header (5).</h5>
-			<p>The text you entered in the form above should appear below here!</p>
-			<div style='height:100px; display:inline-block; background-color:black; color:white'><%= username %></div>
-		<div style='float: right; width: 10%; height:100%'>
-			<p style='text-align: center; transform: rotate(90deg)'><a href="/viewAll">Click here to view the items database!</a></p>
-		</div>
+		<% if(!username) { %> <!-- Yes, I realize this is a bit of a flawed execution of username entry. 
+		It is just an example, though! -->
+		<h1>Greetings, random citizen!</h1>
+			<div style="background-color:black; color:white; border:2px solid orange; padding:5px">
+				Want to be called something specific once? You're in luck!<br>
+				<form action="/" METHOD="POST">
+					<input type="text" name="name" style="border:1px solid gray; background-color:white; color:black" placeholder="Enter your desired name here!"> 
+					<input type="submit" value="Submit" style="border:1px solid white; background-color:black; color:white">
+				</form>
+			</div>
+		<% }
+		else { %>
+			<h1>Welcome, <%= username %>! <a href="/" style="text-decoration:none"><button type="button" style="border:2px solid orange; background-color:black; color:white; padding:3px; margin:10px">Log Out (sorta...)</button></a></h1>
+		<% } %>
+		<hr>
+		<p>Currently, the following pages are undergoing testing:</p>
+		<ul>
+			<li><strong><a href="/viewAll" style="text-decoration:none; color:orange">Lost & Found</a></strong> - View and manage the items within the database!</li>
+		</ul>
 	</body>
 </html>
