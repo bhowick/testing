@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="teststyle.css">
 	</head>
 	<body>
+		<%- include('../partials/navbar') %>
 		<h3>Now Editing <span style='color:<%= item.color %>'><%= item.name %></span> (ID #<%= item.id %>)</h3>
 		<form action='/editEntry' METHOD='POST'>
 				<input type="hidden" name="id" value="<%= item.id %>" readonly>

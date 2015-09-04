@@ -6,9 +6,7 @@
 		<!-- <link rel="stylesheet" type="text/css" href="teststyle.css"> -->
 	</head>
 	<body>
-		<div class="navbar" style="position:fixed; top:0; right:0; border-bottom: 3px solid #88cccc; border-left: 3px solid #88cccc; border-bottom-left-radius: 3px; padding: 5px; width:25%">
-			<span style="color:orange">This is a test of the emergency navbar broadcasting system.</span>
-		</div>
+		<%- include('../partials/navbar') %>
 		<% if(!username) { %> <!-- Yes, I realize this is a bit of a flawed execution of username entry. 
 		It is just an example, though! -->
 		<h1>Greetings, random citizen!</h1>
