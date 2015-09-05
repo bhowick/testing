@@ -7,19 +7,19 @@
 	</head>
 	<body>
 		<%- include('../partials/navbar') %>
-		<% if(!username) { %> <!-- Yes, I realize this is a bit of a flawed execution of username entry. 
+		<% if(!fakeName) { %> <!-- Yes, I realize this is a bit of a flawed execution of the name entry. 
 		It is just an example, though! -->
 		<h1>Greetings, random citizen!</h1>
-			<div style="background-color:black; color:white; border:2px solid orange; padding:5px">
+			<div style="background-color:black; color:white; border:2px solid orange; padding:5px; display:inline-block">
 				Want to be called something specific once? You're in luck!<br>
 				<form action="/" METHOD="POST">
-					<input type="text" name="name" style="border:1px solid gray; background-color:white; color:black" placeholder="Enter your desired name here!"> 
+					<input type="text" name="fakeName" style="border:1px solid gray; background-color:white; color:black" placeholder="Enter your desired name here!"> 
 					<input type="submit" value="Submit" style="border:1px solid white; background-color:black; color:white">
 				</form>
 			</div>
 		<% }
 		else { %>
-			<h1>Welcome, <%= username %>! <a href="/" style="text-decoration:none"><button type="button" style="border:2px solid orange; background-color:black; color:white; padding:3px; margin:10px">Log Out (sorta...)</button></a></h1>
+			<h1>Welcome, <%= fakeName %>! <a href="/" style="text-decoration:none"><button type="button" style="border:2px solid orange; background-color:black; color:white; padding:3px; margin:10px">Log Out (sorta...)</button></a></h1>
 		<% } %>
 		<hr>
 		<p>Currently, the following pages are undergoing testing:</p>
