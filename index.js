@@ -24,40 +24,46 @@ EJS code alongside HTML
 /*THIS IS ALSO, HOPEFULLY*/
 //NOW IT'S A HAIKU
 
+
+/*===============================================================
+REQUIRED
+These things initialize plugins/external code as objects for our 
+server to use. 
+=================================================================*/
+
 //Plugins (is that the right term?)
 var express = require('express'); //Gettin' express code. Express is for NodeJS.
 var ejs = require('ejs'); //We're going to use the EJS view engine to render .ejs pages. Neat, <% %>-escaped stuff.
 var bodyParser = require('body-parser'); //Parsing variables from document bodies.
 var sqlite3 = require('sqlite3').verbose(); //Supposedly .verbose() makes it have more meaningful output to the console.
-
 var validator = require('validator'); //Helps us validate input! Useful for queries.
 var cookieParser = require('cookie-parser'); //For cookies.
 var passport = require('passport'); //For user authentication.
 var session = require('express-session'); //For sessions.
 //var morgan = require('morgan'); //For dev output, apparently. 
 
-
 //Passport (local)
 var LocalStrategy = require('passport-local').Strategy;
-
 
 //SQLite Database
 var dbFile = './db/db.sqlite'; //This tells us where our database's file is located.
 var db = new sqlite3.Database(dbFile); //Initializes our database as a new object. :)
 
-
-//Externalized files to handle certain URLs. Library directory!
+//My own stuff. Externalized files to handle certain URLs.
 var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
 var addNewEntryHandler = require('./lib/addNewEntryHandler.js'); //For adding new database entries.
 var editEntryHandler = require('./lib/editEntryHandler.js'); //For editing database entries.
-var registerHandler = require('./lib/registerHandler.js');
-var globalTokens = require('./lib/globalTokens.js')
+var registerHandler = require('./lib/registerHandler.js'); //For registering user accounts!
+var globalTokens = require('./lib/globalTokens.js'); //For global variables (such as the user's data).
 
-//Express initialization as "app".
+//Express initialization as "app". Kind of important. (Very important!)
 var app = express(); //This tells us to use the "app" object for Express calls.
 
 
-//BELOW THIS LINE IS WHERE WE DECLARE MIDDLEWARE. It runs every single time before the page loads. 
+/*===============================================================
+MIDDLEWARE
+This stuff loads every single time the server receives a request.
+=================================================================*/ 
 app.set('view engine', 'ejs'); //This is a view engine for Express. It allows us to parse <% %> code.
 app.use(session({secret: 'harbfeadtuegwtdlml', resave:true, saveUninitialized:true})); //Not totally sure about these settings.
 //app.use(morgan('dev')); //Not sure.
@@ -111,10 +117,15 @@ passport.deserializeUser(function (user,done) {
 	done(null,user);
 });
 
-
+//Telling Express the right directory to use.
 app.use(express.static(__dirname + '/views/')); //This tells express to use the /views/ directory.
 
-//[app.get] - This is used if the server is told to get a URL.
+
+/*===============================================================
+GET
+When the server is told to GET something.
+=================================================================*/
+
 app.get('/', indexHandler.GET); //Rendering the index page!
 app.get('/viewAll', function(req,res) { //Rendering the database onto a nice little output page!
 	db.all('SELECT * FROM items', function (err,rows) {
@@ -166,7 +177,12 @@ app.get('/logout', function (req,res) {
 });
 app.get('/register',registerHandler.GET);
 
-//[app.post] - This is used if the server receives a post request! 
+
+/*===============================================================
+POST
+When the server receives a request to POST somewhere.
+=================================================================*/
+
 app.post('/', indexHandler.POST); //Handling data POSTed to the index page.
 app.post('/addNewEntry', addNewEntryHandler.POST); //Handling data POSTed to the "add new entry" page.
 app.post('/editEntry', editEntryHandler.POST); //Handling data POSTed to the "edit entry" page.
@@ -178,7 +194,11 @@ app.post('/login', passport.authenticate('local', {
 app.post('/register', registerHandler.POST);
 
 
-//[app.all] - For handling pages that are only really loaded one way!
+/*===============================================================
+ALL
+Just to show it exists, a way to handle everything (GET,POST)
+requested from or sent to a page. 
+=================================================================*/
 app.all('/deleteEntry', function(req,res) { //Handling database entry deletion and redirecting back to the viewAll page.
 	var id = req.body.id || null;
 	if(id){
@@ -189,5 +209,10 @@ app.all('/deleteEntry', function(req,res) { //Handling database entry deletion a
 	res.redirect('/viewAll');
 });
 
-console.log('Listening on Port 3000.'); //To let us know in console when the server is working.
+
+/*===============================================================
+LISTENING
+On which port is the server going to look for incoming traffic?
+=================================================================*/
 app.listen(3000); //We are now going to listen on port 3000. Arbitration!
+console.log('Listening on Port 3000.'); //To let us know in console when the server is working.
