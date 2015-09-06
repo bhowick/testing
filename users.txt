@@ -1,0 +1,3 @@
+CREATE TABLE "users" ("userID" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , "name" VARCHAR NOT NULL  UNIQUE , "pass" VARCHAR NOT NULL , "timeCreated" INTEGER NOT NULL , "lastLogin" INTEGER NOT NULL , "balance" INTEGER)
+
+This is the database creation code for the "users" table.
