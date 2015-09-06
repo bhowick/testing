@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<%- include('../partials/navbar') %>
-		<h3>Now Editing <span style="color:<%= item.color %>"><%= item.name %></span> (ID #<%= item.id %>)</h3>
+		<h3>Now Editing <span class="shadowed" style="color:<%= item.color %>"><%= item.name %></span> (ID #<%= item.id %>)</h3>
 		<form action='/editEntry' METHOD='POST'>
 				<input type="hidden" name="id" value="<%= item.id %>" readonly>
 			<table class="setWidth">
@@ -30,7 +30,7 @@
 				<tr>
 					<td><strong>New Color</strong>: <br>
 					<input class="itemEntry" type="text" name="color" value="<%= item.color %>" placeholder="Enter new item color here"></td>
-					<td><span class="faded"><em>(Current Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
+					<td><span class="faded"><em>(Current Color: <span class="shadowed" style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
 				</tr>
 			</table>
 			<br>
