@@ -6,33 +6,36 @@
 	</head>
 	<body>
 		<%- include('../partials/navbar') %>
-		<h3>Now Editing <span style='color:<%= item.color %>'><%= item.name %></span> (ID #<%= item.id %>)</h3>
+		<h3>Now Editing <span style="color:<%= item.color %>"><%= item.name %></span> (ID #<%= item.id %>)</h3>
 		<form action='/editEntry' METHOD='POST'>
 				<input type="hidden" name="id" value="<%= item.id %>" readonly>
-			<table>
-				<th colspan="2" style:"text-align:center"><strong>Enter Data Below!</strong></th>
+			<table class="setWidth">
+				<tr>
+					<th class="centered" colspan="2"><strong>Enter Data Below!</strong></th>
+				</tr>
 				<tr>
 					<td><strong>New Name</strong>: <br>
 					<input class="itemEntry" type="text" name="name" value="<%= item.name %>" placeholder="Enter new item name here" autofocus></td>
-					<td><span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span></td>
+					<td><span class="faded"><em>(Current Name: <%= item.name %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Description</strong>: <br>
-					<input class="itemEntry" type="text" name="desc" value="<%= item.desc %>" placeholder="Enter new item description here"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
+					<input class="itemEntry" type="text" name="desc" value="<%= item.desc %>" placeholder="Enter new item description here"></td><td><span class="faded"><em>(Current Description: <%= item.desc %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Price</strong>: <br>
 					<input class="itemEntry" type="number" name="price" min="0" value="<%= item.price %>" placeholder="Enter new item price here"></td>
-					<td><span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span></td>
+					<td><span class="faded"><em>(Current Price: <%= item.price %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Color</strong>: <br>
 					<input class="itemEntry" type="text" name="color" value="<%= item.color %>" placeholder="Enter new item color here"></td>
-					<td><span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
+					<td><span class="faded"><em>(Current Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
 				</tr>
 			</table>
+			<br>
 			<input class="outlined" type="submit" value="Submit New Entry">
 		</form>
-		<p>Click <a href='/viewAll'>here</a> to go back to viewing all of the items!</p>
+		<p>Click <a href="/viewAll">here</a> to go back to viewing all of the items!</p>
 	</body>
 </html>

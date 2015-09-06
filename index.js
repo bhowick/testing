@@ -48,7 +48,7 @@ var db = new sqlite3.Database(dbFile); //Initializes our database as a new objec
 var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
 var addNewEntryHandler = require('./lib/addNewEntryHandler.js'); //For adding new database entries.
 var editEntryHandler = require('./lib/editEntryHandler.js'); //For editing database entries.
-
+var globalTokens = require('./lib/globalTokens.js')
 
 //Express initialization as "app".
 var app = express(); //This tells us to use the "app" object for Express calls.
@@ -64,6 +64,7 @@ app.use(passport.initialize()); //Initializes passport.
 app.use(passport.session()); //Initializes passport's session.
 
 //Custom page-loading stuff.
+app.use(globalTokens);
 app.use(function (req,res,next) {
   req.db = db; //Allows us to externalize database calls.
   req.validator = validator; //Allows us to externalize validator.
@@ -83,6 +84,16 @@ passport.use(new LocalStrategy(
 			if(!user.pass || user.pass != password) { //If the user's password is empty or doesn't exist.
 				return done(null, false, { message: 'Incorrect password.' });
 			}
+			var d = new Date();
+			var timeStamp = Math.floor(d.getTime()/1000); //We want a workable date in Unix timestamp seconds.
+			var newQuery = [timeStamp, user.userID]; //The array to put into the query to update it.
+
+			db.run('UPDATE users SET lastLogin = ? WHERE userID = ?', newQuery, function(err) {
+				if(err) {
+					return done(err);
+				}
+				console.log('Last login time for ' + user.name + ' updated successfully.');
+			});
 			return done(null, user); //Returns the user as an object if everything checks out.
 		});
 
@@ -103,7 +114,6 @@ app.use(express.static(__dirname + '/views/')); //This tells express to use the 
 //[app.get] - This is used if the server is told to get a URL.
 app.get('/', indexHandler.GET); //Rendering the index page!
 app.get('/viewAll', function(req,res) { //Rendering the database onto a nice little output page!
-	var user = req.user || null; //Might be temporary until this is globalized.
 	db.all('SELECT * FROM items', function (err,rows) {
 		//If the database messes up...
 		if(err) {
@@ -112,7 +122,7 @@ app.get('/viewAll', function(req,res) { //Rendering the database onto a nice lit
 		else {
 			var items = rows;
 
-			res.render('pages/viewAll', {items:items, user:user}); //The lack of a "/" before "pages" is needed. Otherwise it errors!
+			res.render('pages/viewAll', {items:items}); //The lack of a "/" before "pages" is needed. Otherwise it errors!
 		}
 	});
 	
@@ -120,7 +130,6 @@ app.get('/viewAll', function(req,res) { //Rendering the database onto a nice lit
 app.get('/addNewEntry', addNewEntryHandler.GET); //Loading the "add new entry" form page.
 app.get('/editEntry', editEntryHandler.GET); //Loading the "edit entry" form page.
 app.get('/confirmDelete', function(req,res) { //Loading the confirmation page for deleting an entry.
-	var user = req.user || null; //Might be temporary until this is globalized.
 	var id = req.query.id || null;
 	if(id) {
 		db.get('SELECT * FROM items WHERE id = ?', id, function(err,row){
@@ -129,7 +138,7 @@ app.get('/confirmDelete', function(req,res) { //Loading the confirmation page fo
 			}
 			else {
 				var item = row;
-				res.render('pages/confirmDelete', {item:item, user:user});
+				res.render('pages/confirmDelete', {item:item});
 			}
 		});
 	}

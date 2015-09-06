@@ -56,6 +56,11 @@
 	
 }
 
+.faded {
+	color:gray;
+	font-size:0.8em;
+}
+
 .outlined {
 	border:2px solid black;
 	border-radius:5px;
@@ -63,6 +68,21 @@
 
 .centered {
 	text-align:center;
+}
+
+.setWidth {
+	min-width:50%;
+	max-width:600px;
+}
+
+.setWidth tr td:first-child{
+	min-width:30%;
+	max-width:250px;
+}
+
+.setWidth tr td:last-child{
+	min-width:50%;
+	max-width:300px;
 }
 
 a {
