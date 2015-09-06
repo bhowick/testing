@@ -5,19 +5,28 @@
 		<link rel="stylesheet" type="text/css" href="teststyle.css">
 	</head>
 	<body>
-		<h3><strong>Please enter your information below.</strong></h3>
-		<form action="/login" METHOD="POST">
-			<div id="loginForm">
-				<label><strong>Username:</strong></label>
-				<input type="text" name="username" placeholder="Enter username here">
-				<br>
-				<label><strong>Password:</strong></label>
-				<input type="password" name="password" placeholder="Enter your password here.">
-				<br>
-				<input type="submit" value="Log In">
-			</div>
-		</form>
-		<br>
-		<p>Alternatively, <a href="/">click here</a> to return to the index page!</p>
+		<%- include('../partials/navbar') %>
+		<% if(!user) { %>
+
+			<h3><strong>Please enter your information below.</strong></h3>
+			<form action="/login" METHOD="POST">
+				<div id="loginForm">
+					<label><strong>Username:</strong></label>
+					<input type="text" name="username" placeholder="Enter username here">
+					<br>
+					<label><strong>Password:</strong></label>
+					<input type="password" name="password" placeholder="Enter your password here.">
+					<br>
+					<input type="submit" value="Log In">
+				</div>
+			</form>
+			<br>
+			<p>Alternatively, <a href="/">click here</a> to return to the index page!</p>
+		<% } 
+		else { %>
+			<h3><strong>You are already logged in!</strong></h3>
+			<br>
+			<p><a href="/">Click here</a> to return to the index page.</p>
+		<% } %>
 	</body>
 </html>

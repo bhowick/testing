@@ -7,9 +7,11 @@ I am improving (hopefully!) as I go along, and will continue to test code here a
 am able to learn more of it. 
 
 Currently Learning:
-User Authentication
+User Authentication (Specifics)
 
 Learned:
+User Authentication (Basic)
+Making HTML/CSS Neater
 Database interaction (SQLite)
 Page handling (GET,POST, etc.)
 Parsing variables from a page's body or URL
@@ -48,6 +50,7 @@ var db = new sqlite3.Database(dbFile); //Initializes our database as a new objec
 var indexHandler = require('./lib/indexHandler.js'); //The "." in front of lib is necessary for this! It's not Terminal!
 var addNewEntryHandler = require('./lib/addNewEntryHandler.js'); //For adding new database entries.
 var editEntryHandler = require('./lib/editEntryHandler.js'); //For editing database entries.
+var registerHandler = require('./lib/registerHandler.js');
 var globalTokens = require('./lib/globalTokens.js')
 
 //Express initialization as "app".
@@ -161,6 +164,7 @@ app.get('/logout', function (req,res) {
 	req.logout();
 	res.redirect('/');
 });
+app.get('/register',registerHandler.GET);
 
 //[app.post] - This is used if the server receives a post request! 
 app.post('/', indexHandler.POST); //Handling data POSTed to the index page.
@@ -171,6 +175,7 @@ app.post('/login', passport.authenticate('local', {
 	failureRedirect: '/loginFailure'
 })
 );
+app.post('/register', registerHandler.POST);
 
 
 //[app.all] - For handling pages that are only really loaded one way!

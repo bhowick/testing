@@ -1,12 +1,13 @@
 .navbar {
 	position:fixed;
-	top:0;
-	right:0;
+	top:0px;
+	right:0px;
 	border-bottom: 3px solid #88cccc;
 	border-left: 3px solid #88cccc;
 	border-bottom-left-radius: 3px;
 	padding: 5px;
 	display:inline-block;
+	background-color:white;
 }
 
 .userInfo {
@@ -68,6 +69,13 @@
 
 .centered {
 	text-align:center;
+}
+
+.failed {
+	border: 1px dotted red;
+	display:inline-block;
+	background-color:#ffdddd;
+	padding:3px;
 }
 
 .setWidth {

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Register!</title>
+		<link rel="stylesheet" type="text/css" href="teststyle.css">
+	</head>
+	<body>
+		<%- include('../partials/navbar') %>
+		<% if(!user) { %>
+			<h3><strong>Create an account!</strong></h3>
+			<% if(regStatus) { %>
+				<div class="failed">
+					<strong>Registration failed</strong>: <em><%= regStatus %></em>
+				</div><br>
+			<% } %>
+			<form action="/register" METHOD="POST">
+				<div id="loginForm">
+					<label><strong>Desired Username:</strong></label>
+					<input type="text" name="username" placeholder="Enter username here" autofocus>
+					<br>
+					<label><strong>Desired Password:</strong></label>
+					<input type="password" name="password" placeholder="Enter your password here.">
+					<br>
+					<label><strong>Confirm Password:</strong></label>
+					<input type="password" name="passConfirm" placeholder="Confirm your password.">
+					<br>
+					<input type="submit" value="Register">
+				</div>
+			</form>
+		<% } 
+		else { %>
+			<h3><strong>You are already logged in.</strong></h3>
+		<% } %>
+		<br>
+		<p><a href="/">Click here</a> to return to the index page.</p>
+	</body>
+</html>
