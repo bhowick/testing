@@ -13,26 +13,26 @@
 				<th colspan="2" style:"text-align:center"><strong>Enter Data Below!</strong></th>
 				<tr>
 					<td><strong>New Name</strong>: <br>
-					<input type="text" name="name" style="border:1px solid gray" value="<%= item.name %>" placeholder="Enter new item name here" autofocus></td>
+					<input class="itemEntry" type="text" name="name" value="<%= item.name %>" placeholder="Enter new item name here" autofocus></td>
 					<td><span style="color:gray"><em>(Old Name: <%= item.name %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Description</strong>: <br>
-					<input type="text" name="desc" style="border:1px solid gray" value="<%= item.desc %>" placeholder="Enter new item description here"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
+					<input class="itemEntry" type="text" name="desc" value="<%= item.desc %>" placeholder="Enter new item description here"></td><td><span style="color:gray"><em>(Old Description: <%= item.desc %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Price</strong>: <br>
-					<input type="number" name="price" min="0" style="border:1px solid gray" value="<%= item.price %>" placeholder="Enter new item price here"></td>
+					<input class="itemEntry" type="number" name="price" min="0" value="<%= item.price %>" placeholder="Enter new item price here"></td>
 					<td><span style="color:gray"><em>(Old Price: <%= item.price %>)</em></span></td>
 				</tr>
 				<tr>
 					<td><strong>New Color</strong>: <br>
-					<input type="text" name="color" value="<%= item.color %>" style="border:1px solid gray" placeholder="Enter new item color here"></td>
+					<input class="itemEntry" type="text" name="color" value="<%= item.color %>" placeholder="Enter new item color here"></td>
 					<td><span style="color:gray"><em>(Old Color: <span style="color:<%= item.color %>"><%= item.color %></span>)</em></span></td>
 				</tr>
 			</table>
-			<input type="submit" value="Submit New Entry" style="border:2px solid black">
+			<input class="outlined" type="submit" value="Submit New Entry">
 		</form>
-		<p>Click <a href='/viewAll' style='text-decoration:none; color:orange'>here</a> to go back to viewing all of the items!</p>
+		<p>Click <a href='/viewAll'>here</a> to go back to viewing all of the items!</p>
 	</body>
 </html>

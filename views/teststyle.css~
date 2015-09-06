@@ -56,6 +56,15 @@
 	
 }
 
+#loginForm{
+	display:inline-block;
+	border:5px solid black;
+	border-radius:5px;
+	background-color:#dddddd;
+	margin:3px;
+	padding: 5px;
+}
+
 .outlined {
 	border:2px solid black;
 	border-radius:5px;
@@ -156,11 +165,3 @@ td {
 	background-color:#ffdddd;
 }
 
-#loginForm{
-	display:inline-block;
-	border:5px solid black;
-	border-radius:5px;
-	background-color:#dddddd;
-	margin:3px;
-	padding: 5px;
-}

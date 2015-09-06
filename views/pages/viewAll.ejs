@@ -12,20 +12,22 @@
 		</div>
 		<table>
 			<thead>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>Edit</th>
-				<th style="color:darkred">Delete item?</th>
+				<tr>
+					<th id="itemName">Name</th>
+					<th id="itemDesc">Description</th>
+					<th id="itemPrice">Price</th>
+					<th id="edit">Edit</th>
+					<th id="delete">Delete</th>
+				</tr>
 			</thead>
 			<tbody><!--Code is happening below this line to populate the table's contents! -->
 			<% items.forEach( function(item) { %>
 				<tr>
-					<td style='color:<%= item.color %>'><strong><%= item.name %></strong></td>
-					<td><em><%= item.desc %></em></td>
-					<td><%= item.price %></td>
-					<td><a href='/editEntry?id=<%= item.id %>' style='text-decoration:none; color:darkgreen'>Edit</a></td>
-					<td><a href='/confirmDelete?id=<%= item.id %>' style='text-decoration:none; color:darkorange'>Delete</a></td>
+					<td class="itemName" style='color:<%= item.color %>'><strong><%= item.name %></strong></td>
+					<td class="itemDesc"><em><%= item.desc %></em></td>
+					<td class="itemPrice"><%= item.price %></td>
+					<td class="edit"><a class="edit" href="/editEntry?id=<%= item.id %>">Edit</a></td>
+					<td class="delete"><a class="delete" href="/confirmDelete?id=<%= item.id %>">Delete</a></td>
 					
 				</tr>
 
@@ -33,7 +35,8 @@
 			</tbody>
 		</table>
 		<br>
-		<br>
-		<p>Want to add a new item to the list? Click <a href='/addNewEntry' style='text-decoration:none;color:orange'>here</a>!</p>
+		<div>
+			<p>Want to add a new item to the list? Click <a href='/addNewEntry'>here</a>!</p>
+		</div>
 	</body>
 </html>

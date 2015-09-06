@@ -11,25 +11,30 @@
 		<p>Please use the form below to enter item data.</p>
 		<form action="/addNewEntry" METHOD="POST"> <!--Takes the input data and tells the server to treat it acccordingly. -->
 
-		<strong>Item Name</strong>: 
-		<input type="text" name="name" style="border:1px solid gray" placeholder="Item Name">
-		<br>
+			<strong>Item Name</strong>: 
+			<input class="itemEntry" type="text" name="name" placeholder="Item Name">
+			<br>
 
-		<strong>Item Description</strong>: 
-		<input type="text" name="desc" style="border:1px solid gray" placeholder="Item Description">
-		<br>
+			<strong>Item Description</strong>: 
+			<input class="itemEntry" type="text" name="desc" placeholder="Item Description">
+			<br>
 
-		<strong>Item Price</strong>: 
-		<input type="number" name="price" min="0" style="border:1px solid gray" placeholder="Item Price">
-		<br>
+			<strong>Item Price</strong>: 
+			<input class="itemEntry" type="number" name="price" min="0" placeholder="Item Price">
+			<br>
 
-		<strong>Item Color</strong>: 
-		<input type="text" name="color" value="black" style="border:1px solid gray" placeholder="Item Color (Blank = Random!)">
-		<br>
+			<strong>Item Color</strong>: 
+			<input class="itemEntry" type="text" name="color" placeholder="Item Color (Random if left blank!)">
+			<br>
 
-		<input type="submit" value="Submit New Entry" style="border:2px solid black">
+			<input type="submit" value="Submit New Entry" style="border:2px solid black">
+		</form>
 		<br>
-		<br>
-		<p>Just added something and want to check whether it's there? Click <a href='/viewAll' style='text-decoration:none; color:orange'>here</a> to see an updated items list!</p>
+		<div>
+			<p>Click <a href="/viewAll">here</a> to return to the items list!</p>
+			<% if(itemAdded) { %>
+				<p>Item successfully added to the database!</p>
+			<% } %>
+		</div>
 	</body>
 </html>

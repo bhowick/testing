@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 		<!-- It's a navigation bar... corner... thing. -->
-		<div class="navbar" style="position:fixed; top:0; right:0; border-bottom: 3px solid #88cccc; border-left: 3px solid #88cccc; border-bottom-left-radius: 3px; padding: 5px; display:inline-block">
+		<div class="navbar">
 					<% if(user) { %>
-			<div style="display:inline-block; background-color:black; border:3px solid orange; border-radius: 3px; padding:3px; margin: 5px; color:white">
+			<div class="userInfo" style="">
 				<strong>Welcome, <span style="color:#88cccc"><%= user.name %></span>!</strong>
 			</div>
-			<div style="display:inline-block; background-color:black; border:3px solid orange; border-radius: 3px; padding:3px; margin-right:5px; color:white">
-			<a href="/logout" style="text-decoration:none;color:orange">Log Out</a>
+			<div class="logoutButton">
+				<a href="/logout">Log Out</a>
 			</div>
 		<% } 
 		else { %>
-			<div style="display:inline-block; background-color:black; border:3px solid orange; border-radius: 3px; padding:3px; margin-right:5px; color:white">
-			<a href="/login" style="text-decoration:none;color:orange">Log In</a>
+			<div class="loginButton">
+				<a href="/login">Log In</a>
 			</div>
 		<% } %>
 		</div>
