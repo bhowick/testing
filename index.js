@@ -78,7 +78,7 @@ app.use(globalTokens);
 app.use(function (req,res,next) {
   req.db = db; //Allows us to externalize database calls.
   req.validator = validator; //Allows us to externalize validator.
-  req.crypto = crypto; //Externalizes crypto. Probably not necessary.
+  //req.crypto = crypto; //Externalizes crypto. Probably not necessary.
   next();
 });
 
@@ -113,6 +113,8 @@ passport.use(new LocalStrategy(
 				console.log('The user"' + user.name + '" has logged in successfully.');
 			});
 			return done(null, user); //Returns the user as an object if everything checks out.
+			//CONCERN: This also passes the password and salt off as user methods.
+			//SOLUTION: Store 'em separately.
 		});
 
 	}
