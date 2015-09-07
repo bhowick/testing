@@ -40,6 +40,7 @@ var validator = require('validator'); //Helps us validate input! Useful for quer
 var cookieParser = require('cookie-parser'); //For cookies.
 var passport = require('passport'); //For user authentication.
 var session = require('express-session'); //For sessions.
+var crypto = require('crypto');
 //var morgan = require('morgan'); //For dev output, apparently. 
 
 //Passport (local)
@@ -77,6 +78,7 @@ app.use(globalTokens);
 app.use(function (req,res,next) {
   req.db = db; //Allows us to externalize database calls.
   req.validator = validator; //Allows us to externalize validator.
+  req.crypto = crypto; //Externalizes crypto. Probably not necessary.
   next();
 });
 
@@ -90,7 +92,14 @@ passport.use(new LocalStrategy(
 			if(!user) { //If the user doesn't exist.
 				return done(null, false, { message: 'Username not found.' });
 			}
-			if(!user.pass || user.pass != password) { //If the user's password is empty or doesn't exist.
+			//Crypto stuff time.
+			var iter = 1000; //Number of hash iterations. Apparently 1000 is recommended. Might also be unnecessary.
+			var hashLength = 64; //How long you want the hash to be (bytes).
+			var hashType = 'sha256'; //The type of hash to be used.
+			var hashedKey = crypto.pbkdf2Sync(password, user.salt, iter, hashLength, hashType); //The actual hashing... thing. Makes raw bytes.
+			var hashedPassword = hashedKey.toString('hex');//Takes the bytes and makes a nice string out of them.
+			
+			if(!user.pass || user.pass != hashedPassword) { //If the user's password is empty or doesn't exist.
 				return done(null, false, { message: 'Incorrect password.' });
 			}
 			var d = new Date();
@@ -101,7 +110,7 @@ passport.use(new LocalStrategy(
 				if(err) {
 					return done(err);
 				}
-				console.log('Last login time for ' + user.name + ' updated successfully.');
+				console.log('The user"' + user.name + '" has logged in successfully.');
 			});
 			return done(null, user); //Returns the user as an object if everything checks out.
 		});
